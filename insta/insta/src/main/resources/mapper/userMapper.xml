@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org/DTO Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.posco.insta.user.repository.UserMapper">
+    <select id="getUser" resultType="UserDto">
+        SELECT id, userId, img, name FROM users
+    </select>
+    <select id="getUserById" resultType="UserDto" parameterType="UserDto">
+        SELECT id, userId, name, img FROM users WHERE id = #{id}
+    </select>
+    <insert id="postUser" parameterType="UserDto" useGeneratedKeys="true" keyProperty="id">
+        INSERT INTO users (userId, name, img, password) VALUES (#{userId}, #{name}, #{img}, #{password})
+    </insert>
+    <delete id="deleteUser" parameterType="UserDto" >
+        DELETE FROM users WHERE id = #{id}
+    </delete>
+    <update id="updateUser" parameterType="UserDto" >
+        UPDATE users
+                     <set>
+                         <if test="img!null">img = #{img},</if>
+                         <if test="name!null">img = #{name},</if>
+                         <if test="password!null">img = #{password},</if>
+                     </set>
+                     WHERE id = #{id}
+
+    </update>
+    <select id="getUserByUserIdAndPassword" resultType="UserDto">
+        SELECT id, userid, name, img
+        FROM users
+        WHERE userId = #{userId} and password = #{password}
+    </select>
+</mapper>
