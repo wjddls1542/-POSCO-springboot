@@ -1,30 +1,45 @@
 package com.posco.insta.post.controller;
 
+import com.posco.insta.aspect.TokenRequired;
+import com.posco.insta.config.SecurityService;
 import com.posco.insta.post.model.PostDto;
+import com.posco.insta.post.model.SelectJoinDto;
 import com.posco.insta.post.service.PostService;
 import com.posco.insta.post.service.PostServiceImpl;
+import com.posco.insta.user.model.UserDto;
+import org.apache.catalina.User;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.ModelAndView;
 
 import java.util.List;
 
 @RestController
 @RequestMapping("post")
+@TokenRequired
 public class PostController {
     @Autowired
     PostServiceImpl postService;
 
-    @GetMapping("/")
-    public List<PostDto> getPost() {return postService.findPost();}
+    @Autowired
+    SecurityService securityService;
+    @Autowired
+    PostDto postDto;
 
-    @GetMapping("/{id}")
-    public PostDto getPostById(@PathVariable String id){
-        PostDto postDto = new PostDto();
+    @GetMapping("/")
+    public List<PostDto> getPosts() {return postService.getPosts();}
+
+    @GetMapping("/my")
+
+    public List<SelectJoinDto> getMyPosts(){
+        postDto.setUserId(securityService.getIdAtToken());
+        return postService.getPostByUserId(postDto);
+    }
+    @DeleteMapping("/{id}")
+    public Integer deletePost(@PathVariable String id){
         postDto.setId(Integer.valueOf(id));
-        return postService.findPostById(postDto);
+        postDto.setUserId(securityService.getIdAtToken());
+        return postService.deletePost(postDto);
     }
 
 }

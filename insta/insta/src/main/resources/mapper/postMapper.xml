@@ -1,12 +1,18 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org/DTO Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.posco.insta.post.repository.PostMapper">
-    <select id="getPost" resultType="PostDto">
-        SELECT id, userId, img, content FROM posts;
+    <select id="getPosts" resultType="PostDto">
+        SELECT id, userId, img, content FROM posts
     </select>
 
-    <select id="getPostById" resultType="PostDto" parameterType="PostDto">
-        SELECT id, userId, img, content FROM posts where id=#{id};
+    <select id="findPostsByUserId" resultType="SelectJoinDto" parameterType="PostDto">
+        SELECT p.id, p.userId, p.img, p.content, u.name AS userName, u.img AS userImg
+        FROM posts AS p INNER JOIN users AS u
+                        ON p.userId = u.id
+                        WHERE p.userId=#{userId}
     </select>
+    <delete id="deletePost" parameterType="PostDto">
+        DELETE FROM posts WHERE id = #{id} AND userId = #{userId}
+    </delete>
 
 </mapper>
