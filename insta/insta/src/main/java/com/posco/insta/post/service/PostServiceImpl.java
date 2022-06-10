@@ -22,9 +22,34 @@ public class PostServiceImpl implements PostService{
     public  List<SelectJoinDto> getPostByUserId(PostDto postDto){
         return postMapper.findPostsByUserId(postDto);
     }
+    @Override
     public Integer deletePost(PostDto postDto){
         return postMapper.deletePost(postDto);
     }
+    @Override
+    public  List<SelectJoinDto> getPostByNotUserId(PostDto postDto){
+        return postMapper.findPostsByNotUserId(postDto);
+    }
+    @Override
+    public Integer updatePost(PostDto postDto){
+        return postMapper.updatePost(postDto);
+    }
+    @Override
+    public Integer writePost(PostDto postDto){
+        return postMapper.writePost(postDto);
+    }
 
+    @Override
+    public SelectJoinDto getPostsById(PostDto postDto) {
+        return postMapper.getPostsById(postDto);
+    }
+    @Override
+    public List<SelectJoinDto> getPostsLikeKey(String key){
+        return postMapper.getPostsByKey(key);
+    }
 
+    @Override
+    public List<SelectJoinDto> getPostsByMyFollowing(PostDto postDto) {
+        return postMapper.getPostsByMyFollowing(postDto);
+    }
 }

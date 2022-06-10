@@ -17,8 +17,8 @@
         UPDATE users
                      <set>
                          <if test="img!null">img = #{img},</if>
-                         <if test="name!null">img = #{name},</if>
-                         <if test="password!null">img = #{password},</if>
+                         <if test="name!null">name = #{name},</if>
+                         <if test="password!null">password = #{password},</if>
                      </set>
                      WHERE id = #{id}
 

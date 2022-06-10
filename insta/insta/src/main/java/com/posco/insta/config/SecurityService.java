@@ -35,7 +35,7 @@ public class SecurityService {
                 .setExpiration(new Date(System.currentTimeMillis()+expTime)).compact();
     }
     public String getSubject(String tokenBearer){
-        String token = tokenBearer.replace("Bearer ", "");
+        String token = tokenBearer.substring("Bearer ".length());
         Claims claims = Jwts.parserBuilder()
                 .setSigningKey(DatatypeConverter.parseBase64Binary(SECRET_KEY))
                 .build()

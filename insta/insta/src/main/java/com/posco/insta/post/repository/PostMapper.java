@@ -14,5 +14,12 @@ public interface PostMapper {
     Integer deletePost(PostDto postDto);
     PostDto insertPost(PostDto postDto);
 
+    List<SelectJoinDto> findPostsByNotUserId(PostDto postDto);
+    Integer updatePost(PostDto postDto);
+    Integer writePost(PostDto postDto);
+    SelectJoinDto getPostsById(PostDto postDto);
+
+    List<SelectJoinDto> getPostsByKey(String key);
+    List<SelectJoinDto> getPostsByMyFollowing(PostDto postDto);
 
 }
